@@ -34,27 +34,67 @@ app.use(methodOverride('_method'));
 app.use(express.urlencoded({extended: false}));
 // ??? 
 app.use((req, res, next) => {
-	next();
+    if (!global.currentUser) {
+        global.currentUser = null;
+    }
+    next();
 });
 
 // Import models
 const User = require('./models/User.js');
+const Goods = require('./models/Goods.js');
 
 
 // Mount routes
+// app.get('/', (req, res) => {
+// 	res.send('<h1>Hello Welfare Box!</h1>');
+// });
+
+const path = require('path'); // Add this line to include the path module
 app.get('/', (req, res) => {
-	res.send('<h1>Hello Welfare Box!</h1>');
+  res.sendFile(path.join(__dirname, 'views', 'main.html'));
 });
+
 
 // TODO: Create the view
 app.get('/signup', (req, res) => {
     res.render('SignUp.jsx');
 });
 
-// app.get('/FoodForm', (req, res) => {
-//     res.render('FoodForm.jsx', { userData: userData });
-// });
+app.post('/signup', (req, res) => {
+    User.create(req.body)
+    .then((user) => {
+        console.log(user);
+        global.currentUser = user;
+        res.redirect('/foodForm');
+    })
+    .catch((error) => {
+        console.log(error);
+        // Handle error appropriately, e.g., render an error page
+        res.status(500).send('Error creating user');
+    });
+});
 
+app.get('/foodForm', (req, res) => {
+    if (global.currentUser) {
+        res.render('FoodForm.jsx', {user: global.currentUser});
+    } else res.render('FoodForm.jsx');
+});
+
+app.post('/foodForm', (req, res) => {
+    if (req.body.isAvailable === 'on') {
+        req.body.isAvailable = true;
+    } else req.body.isAvailable = false;
+
+    Goods.create(req.body)
+    .then((goods) => {
+        console.log(goods);
+        res.redirect('/foodForm');
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+});
 
 // Create the server
 app.listen(3000, () => {
