@@ -43,16 +43,16 @@ const User = require('./models/User.js');
 
 // Mount routes
 app.get('/', (req, res) => {
-	res.send('<h1>Hello World!</h1>');
+	res.send('<h1>Hello Welfare Box!</h1>');
 });
 
 // TODO: Create the view
-// app.get('/login', (req, res) => {
-//     res.render('SignUp.jsx');
-// });
+app.get('/signup', (req, res) => {
+    res.render('SignUp.jsx');
+});
 
 // app.get('/FoodForm', (req, res) => {
-//     res.render('FoodForm.jsx');
+//     res.render('FoodForm.jsx', { userData: userData });
 // });
 
 
