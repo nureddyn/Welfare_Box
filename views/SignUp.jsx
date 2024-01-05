@@ -1,16 +1,17 @@
+// Login system:
+// Sign up
+// 	Username
+// 	Type of user: Provider/Receiver
+// 	Submit button: redirect to Provider/Receiver Form
+
 import React, { useState } from 'react';
 
 const SignUp = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
   const [userType, setUserType] = useState('');
 
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
-  };
-
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
   };
 
   const handleUserTypeChange = (event) => {
@@ -18,6 +19,7 @@ const SignUp = () => {
   };
 
   const handleRedirect = () => {
+
     // Redirect to the provider page
     window.location.href = 'http://localhost:3000/provider';
   };
@@ -27,27 +29,14 @@ const SignUp = () => {
       <h2 style={styles.heading}>Sign Up</h2>
       <form onSubmit={(e) => e.preventDefault()} style={styles.form}>
         <div style={styles.formGroup}>
-          <label htmlFor="firstName" style={styles.label}>
-            First Name
+          <label htmlFor="username" style={styles.label}>
+            Username
           </label>
           <input
             type="text"
-            id="firstName"
-            value={firstName}
-            onChange={handleFirstNameChange}
-            required
-            style={styles.input}
-          />
-        </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="lastName" style={styles.label}>
-            Last Name
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            value={lastName}
-            onChange={handleLastNameChange}
+            id="username"
+            value={username}
+            onChange={handleUsernameChange}
             required
             style={styles.input}
           />
@@ -119,5 +108,3 @@ const styles = {
 };
 
 export default SignUp;
-
-//===============
