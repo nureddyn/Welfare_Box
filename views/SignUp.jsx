@@ -1,17 +1,16 @@
-// Login system:
-// Sign up
-// 	Username
-// 	Type of user: Provider/Receiver
-// 	Submit button: redirect to Provider/Receiver Form
-
 import React, { useState } from 'react';
 
 const SignUp = () => {
-  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [userType, setUserType] = useState('');
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value);
+  };
+
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value);
   };
 
   const handleUserTypeChange = (event) => {
@@ -19,24 +18,38 @@ const SignUp = () => {
   };
 
   const handleRedirect = () => {
-
     // Redirect to the provider page
     window.location.href = 'http://localhost:3000/provider';
   };
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading}>Sign Up</h2>
-      <form onSubmit={(e) => e.preventDefault()} style={styles.form}>
+      <h2 style={styles.heading}>Tell us about you</h2>
+      <form action='/signup' method='POST' onSubmit={(e) => e.preventDefault()} style={styles.form}>
         <div style={styles.formGroup}>
-          <label htmlFor="username" style={styles.label}>
-            Username
+          <label htmlFor="firstName" style={styles.label}>
+            First Name
           </label>
           <input
+            name="firstName"
             type="text"
-            id="username"
-            value={username}
-            onChange={handleUsernameChange}
+            id="firstName"
+            value={firstName}
+            onChange={handleFirstNameChange}
+            required
+            style={styles.input}
+          />
+        </div>
+        <div style={styles.formGroup}>
+          <label htmlFor="lastName" style={styles.label}>
+            Last Name
+          </label>
+          <input
+            name="lastName"
+            type="text"
+            id="lastName"
+            value={lastName}
+            onChange={handleLastNameChange}
             required
             style={styles.input}
           />
@@ -46,6 +59,7 @@ const SignUp = () => {
             Type of user: Provider/Receiver
           </label>
           <select
+            name="userType"
             id="userType"
             value={userType}
             onChange={handleUserTypeChange}
@@ -58,7 +72,7 @@ const SignUp = () => {
           </select>
         </div>
         <div style={styles.formGroup}>
-          <button type="button" onClick={handleRedirect} style={styles.button}>
+          <button type="submit" onClick={handleRedirect} style={styles.button}>
             Sign Up
           </button>
         </div>
